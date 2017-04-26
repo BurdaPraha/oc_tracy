@@ -1,0 +1,11 @@
+{
+  "name": "burdapraha/oc_tracy",
+  "type": "vqmod-plugin",
+  "description": "Implementation Tracy Debugger for Opencart 2.x",
+  "keywords": ["opencart", "tracy-debugger", "tracy", "sql-queries"],
+  "homepage": "http://www.burda.cz",
+  "license": "MIT",
+  "require": {
+    "tracy/tracy": "^2.4"
+  }
+}

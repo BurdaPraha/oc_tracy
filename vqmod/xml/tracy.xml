@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+    <id>Tracy</id>
+    <version>0.1</version>
+    <vqmver required="true">2.6.0</vqmver>
+    <author>Michal Landsman</author>
+
+    <file path="system/startup.php">
+        <operation info="bring tracy">
+            <search position="before">
+                <![CDATA[function library($class) {]]>
+            </search>
+            <add>
+                <![CDATA[
+                    use Tracy\Debugger;
+                    Debugger::enable(Debugger::DEVELOPMENT); // todo: move mode to config
+                ]]>
+            </add>
+        </operation>
+        <operation info="loading classes">
+            <search position="after">
+                <![CDATA[require_once(DIR_SYSTEM . 'helper/json.php');]]>
+            </search>
+            <add>
+                <![CDATA[
+                        require_once(DIR_SYSTEM . 'library/Tracy/Panel/SystemPanel.php');
+                        require_once(DIR_SYSTEM . 'library/Tracy/Panel/SqlPanel.php');
+                        require_once(DIR_SYSTEM . 'library/Tracy/Panel/VariablePanel.php');
+                        require_once(DIR_SYSTEM . 'library/Tracy/TracyPlugin.php');
+                ]]>
+            </add>
+        </operation>
+    </file>
+
+    <file path="system/library/db.php">
+        <operation info="database sql logger">
+            <search position="after">
+                <![CDATA[private $adaptor;]]>
+            </search>
+            <add>
+                <![CDATA[private $log;]]>
+            </add>
+        </operation>
+        <operation>
+            <search position="after">
+                <![CDATA[$this->adaptor =]]>
+            </search>
+            <add>
+                <![CDATA[
+                    $this->log = $this->getLogInstance();
+			        $this->log[]['page_url'] = (isset($_SERVER['QUERY_STRING']) && $_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : 'index.php';
+			        $this->log[]['query_total_time'] = 0;
+                ]]>
+            </add>
+        </operation>
+        <operation>
+            <search position="replace">
+                <![CDATA[public function connected() {]]>
+            </search>
+            <add>
+                <![CDATA[
+                    private function getLogInstance(){
+                            $key = time();
+                            return isset($_SESSION['tracy_sql_log'][$key]) ? $_SESSION['tracy_sql_log'][$key] : $_SESSION['tracy_sql_log'][$key] = array();
+                    }
+
+                    public function connected() {
+                ]]>
+            </add>
+        </operation>
+        <operation>
+            <search position="replace">
+                <![CDATA[return $this->adaptor->query($sql, $params);]]>
+            </search>
+            <add>
+                <![CDATA[
+                    $this->log[]['query_total_time'] = 0;
+                    $trace = debug_backtrace();
+                    $filename = (isset($trace[0]['file'])) ? $trace[0]['file'] : '---';
+                    $query_time = (time() + microtime());
+
+                    $result = $this->adaptor->query($sql, $params);
+
+                    $exec_time = (time() + microtime());
+                    $exec_time = round($exec_time - $query_time, 4);
+
+                    if (!isset($this->log['query_total_time']))
+                    {
+                        $this->log['query_total_time'] = 0;
+                    }
+
+                    $this->log[]['query_total_time'] = (float)$this->log['query_total_time'] + (float)$exec_time;
+                    $this->log[]['file']  = $filename;
+                    $this->log[]['time']  = $exec_time;
+                    $this->log[]['query'] = $sql;
+
+
+                    return $result;
+                ]]>
+            </add>
+        </operation>
+    </file>
+
+    <file name="system/library/template/php.php,system/library/config.php,system/library/db/mysql.php">
+        <operation info="better error reporting">
+            <search position="replace"><![CDATA[trigger_error(]]></search>
+            <add><![CDATA[throw new \Exception(]]></add>
+        </operation>
+    </file>
+
+</modification>
