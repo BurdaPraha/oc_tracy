@@ -3,8 +3,7 @@
 "Tracy: the addictive tool to ease debugging PHP code for cool developers. Friendly design, logging, profiler, advanced features like debugging AJAX calls or CLI support. You will love it."
 For more information see official [Tracy repository](https://github.com/nette/tracy)
 
-
-![Preview of Debugger](./doc/screenshot.png)"
+![Preview of Debugger](./doc/screenshot.png)
 
 ## Installation
 

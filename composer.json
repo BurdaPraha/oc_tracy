@@ -3,9 +3,17 @@
   "type": "vqmod-plugin",
   "description": "Implementation Tracy Debugger for Opencart 2.x",
   "keywords": ["opencart", "tracy-debugger", "tracy", "sql-queries"],
-  "homepage": "http://www.burda.cz",
+  "homepage": "http://burda.cz/cs/kariera/volna-mista#tester-koder",
   "license": "MIT",
+  "post-install-cmd": [
+    "php rename('vqmod/xml/tracy.xml', '../../public/vqmod/xml/tracy.xml');",
+    "php -r \"shell_exec('echo test');\""
+  ],
   "require": {
+    "php": ">=5.4.0",
     "tracy/tracy": "^2.4"
+  },
+  "autoload": {
+    "classmap": ["src/TracyPanel/"]
   }
 }

@@ -5,7 +5,7 @@ namespace TracyPanel;
 use Tracy\Debugger;
 use Tracy\Dumper;
 
-class TracyPlugin
+class Tracy
 {
     private $eventLog;
 
@@ -43,7 +43,7 @@ class TracyPlugin
 
 }
 
-$instance = new TracyPlugin();
+$instance = new Tracy();
 
 function __barDump($variable, $title = 'dumps')
 {
