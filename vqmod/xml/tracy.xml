@@ -12,21 +12,11 @@
             </search>
             <add>
                 <![CDATA[
-                    use Tracy\Debugger;
-                    Debugger::enable(Debugger::DEVELOPMENT); // todo: move mode to config
-                ]]>
-            </add>
-        </operation>
-        <operation info="loading classes">
-            <search position="after">
-                <![CDATA[require_once(DIR_SYSTEM . 'helper/json.php');]]>
-            </search>
-            <add>
-                <![CDATA[
-                        require_once(DIR_SYSTEM . 'library/Tracy/Panel/SystemPanel.php');
-                        require_once(DIR_SYSTEM . 'library/Tracy/Panel/SqlPanel.php');
-                        require_once(DIR_SYSTEM . 'library/Tracy/Panel/VariablePanel.php');
-                        require_once(DIR_SYSTEM . 'library/Tracy/TracyPlugin.php');
+                    if(defined('DEV')){
+                        if(DEV == true){
+                            Tracy\Debugger::enable(Tracy\Debugger::DEVELOPMENT); // todo: move mode to config
+                        }
+                    }
                 ]]>
             </add>
         </operation>
