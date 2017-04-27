@@ -5,9 +5,11 @@
   "keywords": ["opencart", "tracy-debugger", "tracy", "sql-queries"],
   "homepage": "http://burda.cz/cs/kariera/volna-mista#tester-koder",
   "license": "MIT",
-  "post-install-cmd": [
-    "php rename('vqmod/xml/tracy.xml', '../../public/vqmod/xml/tracy.xml');",
-    "php -r \"shell_exec('echo test');\""
+  "post-package-install": [
+    "php \"rename('vendor/burdapraha/oc_tracy/vqmod/xml/tracy.xml', 'public/vqmod/xml/tracy.xml');\""
+  ],
+  "post-package-update": [
+    "php \"rename('vendor/burdapraha/oc_tracy/vqmod/xml/tracy.xml', 'public/vqmod/xml/tracy.xml');\""
   ],
   "require": {
     "php": ">=5.4.0",
