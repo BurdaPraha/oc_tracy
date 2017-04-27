@@ -8,5 +8,5 @@ For more information see official [Tracy repository](https://github.com/nette/tr
 ## Installation
 
 1. Requiring installed [Vqmod](https://github.com/vqmod/vqmod) because VqMod doesn't support installing via composer itself.
-2. `composer require burdapraha/oc_tracy @dev`
+2. `composer require burdapraha/oc_tracy dev-master`
 3. add constant `define('DEV', true);` to your config.php, /admin/config.php
