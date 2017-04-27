@@ -17,7 +17,7 @@ class SqlPanel implements IBarPanel
      */
     private function getLog()
     {
-        return $_SESSION['tracy_sql_log'];
+        return $_SESSION['_tracy']['sql_log'];
     }
 
     /**
@@ -26,6 +26,8 @@ class SqlPanel implements IBarPanel
      */
     public function getTab()
     {
+        dump($this->getLog());
+
         return "<span title=''><img src='{$this->icon}'> {$this->title} (" . sizeof($this->getLog()) . ")</span>";
     }
 
@@ -41,9 +43,10 @@ class SqlPanel implements IBarPanel
             <thead>
                 <tr>
                     <th>ms</th>
+                    <th>sql</th>
                     <th>file</th>
                     <th>url</th>
-                    <th>sql</th>
+
                 </tr>
             </thead>
             <tbody>";
@@ -54,8 +57,10 @@ class SqlPanel implements IBarPanel
             $output.="
             <tr>
                 <td".($sql['time'] > 1 ? ' style="background-color:red;color:white;"' : '').">{$sql['time']}</td>
-                <td style='font-weight: normal'>{$sql['page_url']}</td>
                 <td style='font-weight: normal'>{$sql['query']}</td>
+                <td style='font-weight: normal'>{$sql['file']}</td>
+                <td style='font-weight: normal'>{$sql['page_url']}</td>
+
             </tr>";
             $total_time += $sql['query_total_time'];
         }

@@ -32,6 +32,50 @@
         </operation>
     </file>
 
+    <file path="system/framework.php">
+        <operation info="switch database vs session order init">
+            <search position="replace">
+                <![CDATA[$session = new Session();]]>
+            </search>
+            <add>
+                <![CDATA[]]>
+            </add>
+        </operation>
+        <operation info="switch database vs session order init">
+            <search position="replace">
+                <![CDATA[$session->start();]]>
+            </search>
+            <add>
+                <![CDATA[]]>
+            </add>
+        </operation>
+        <operation info="switch database vs session order init">
+            <search position="replace">
+                <![CDATA[$registry->set('session', $session);]]>
+            </search>
+            <add>
+                <![CDATA[]]>
+            </add>
+        </operation>
+        <operation info="switch database vs session order init">
+            <search position="before">
+                <![CDATA[// Database]]>
+            </search>
+            <add>
+                <![CDATA[
+                    // Session
+                    $session = new Session();
+
+                    if ($config->get('session_autostart')) {
+                        $session->start();
+                    }
+
+                    $registry->set('session', $session);
+                ]]>
+            </add>
+        </operation>
+    </file>
+
     <file path="system/library/db.php">
         <operation info="database sql logger">
             <search position="after">
@@ -47,24 +91,13 @@
             </search>
             <add>
                 <![CDATA[
-                    $this->log = $this->getLogInstance();
-			        $this->log[]['page_url'] = (isset($_SERVER['QUERY_STRING']) && $_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : 'index.php';
-			        $this->log[]['query_total_time'] = 0;
-                ]]>
-            </add>
-        </operation>
-        <operation>
-            <search position="replace">
-                <![CDATA[public function connected() {]]>
-            </search>
-            <add>
-                <![CDATA[
-                    private function getLogInstance(){
-                            $key = time();
-                            return isset($_SESSION['tracy_sql_log'][$key]) ? $_SESSION['tracy_sql_log'][$key] : $_SESSION['tracy_sql_log'][$key] = array();
+                    if(isset($_SESSION['_tracy']['sql_log'])){
+                        unset($_SESSION['_tracy']['sql_log']);
                     }
 
-                    public function connected() {
+                    $this->log = array();
+                    $this->log['page_url'] = (isset($_SERVER['QUERY_STRING']) && $_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : 'index.php';
+                    $this->log['query_total_time'] = 0;
                 ]]>
             </add>
         </operation>
@@ -74,9 +107,14 @@
             </search>
             <add>
                 <![CDATA[
-                    $this->log[]['query_total_time'] = 0;
+                    $this->log['query_total_time'] = 0;
                     $trace = debug_backtrace();
                     $filename = (isset($trace[0]['file'])) ? $trace[0]['file'] : '---';
+
+                    $cmsPath = str_replace('public/system/', '', DIR_SYSTEM);
+                    $pureFile = str_replace($cmsPath, '', $filename);
+
+
                     $query_time = (time() + microtime());
 
                     $result = $this->adaptor->query($sql, $params);
@@ -89,11 +127,12 @@
                         $this->log['query_total_time'] = 0;
                     }
 
-                    $this->log[]['query_total_time'] = (float)$this->log['query_total_time'] + (float)$exec_time;
-                    $this->log[]['file']  = $filename;
-                    $this->log[]['time']  = $exec_time;
-                    $this->log[]['query'] = $sql;
+                    $this->log['query_total_time'] = (float)$this->log['query_total_time'] + (float)$exec_time;
+                    $this->log['file']  = $pureFile;
+                    $this->log['time']  = $exec_time;
+                    $this->log['query'] = $sql;
 
+                    $_SESSION['_tracy']['sql_log'][] = $this->log;
 
                     return $result;
                 ]]>
