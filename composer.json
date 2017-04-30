@@ -11,13 +11,5 @@
   },
   "autoload": {
     "classmap": ["src/"]
-  },
-  "scripts": {
-    "post-package-install": [
-      "php -r \"rename('vendor/burdapraha/oc_tracy/vqmod/xml/tracy.xml', 'public/vqmod/xml/tracy.xml');\""
-    ],
-    "post-package-update": [
-      "php -r \"rename('vendor/burdapraha/oc_tracy/vqmod/xml/tracy.xml', 'public/vqmod/xml/tracy.xml');\""
-    ]
   }
 }
