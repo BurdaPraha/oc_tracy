@@ -26,8 +26,6 @@ class SqlPanel implements IBarPanel
      */
     public function getTab()
     {
-        dump($this->getLog());
-
         return "<span title=''><img src='{$this->icon}'> {$this->title} (" . sizeof($this->getLog()) . ")</span>";
     }
 
