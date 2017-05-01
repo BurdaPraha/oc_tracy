@@ -5,7 +5,7 @@ namespace TracyPanel;
 use Tracy\Debugger;
 use Tracy\Dumper;
 
-class Tracy
+class Plugin
 {
     private $eventLog;
 
@@ -19,7 +19,7 @@ class Tracy
     }
 
     /**
-     * Log extend event
+     * Log extend event, todo: use it for some hooks(?)
      *
      * @param string $event
      * @param array  $args
@@ -40,17 +40,5 @@ class Tracy
             $this->eventLog->data[$event] = [1, $argsInfo];
         }
     }
-
-}
-
-$instance = new Tracy();
-
-function __barDump($variable, $title = 'dumps')
-{
-    Debugger::barDump($variable, $title, [
-        Dumper::COLLAPSE       => 0,
-        Dumper::COLLAPSE_COUNT => 0,
-        Dumper::DEPTH          => 99,
-    ]);
 
 }

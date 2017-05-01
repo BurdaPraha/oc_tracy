@@ -5,6 +5,8 @@ For more information see official [Tracy repository](https://github.com/nette/tr
 
 ![Preview of Debugger](./doc/screenshot.png)
 
+![Preview of Exception bluescreen](https://camo.githubusercontent.com/2c37a6b0c27286f4fd010ccc683682ce714aa774/68747470733a2f2f6e657474652e6769746875622e696f2f74726163792f696d616765732f74726163792d657863657074696f6e2e706e67)
+
 ## Installation
 
 1. Requiring installed [Vqmod](https://github.com/vqmod/vqmod) because VqMod doesn't support installing via composer itself.
