@@ -104,7 +104,8 @@
                     $trace = debug_backtrace();
                     $filename = (isset($trace[0]['file'])) ? $trace[0]['file'] : '---';
 
-                    $cmsPath = str_replace('public/system/', '', DIR_SYSTEM);
+                    $cmsPath = str_replace('upload/system/', '', DIR_SYSTEM);
+                    $cmsPath = str_replace('public/system/', '', $cmsPath);
                     $pureFile = str_replace($cmsPath, '', $filename);
 
 
