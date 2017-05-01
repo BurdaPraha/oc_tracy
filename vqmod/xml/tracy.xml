@@ -17,7 +17,7 @@
                             Tracy\Debugger::enable(Tracy\Debugger::DEVELOPMENT); // todo: move mode to config
 
                             // register panels
-                            $panels = new Tracy();
+                            $panels = new TracyPanel\Plugin();
                         }
                     }
                 ]]>
