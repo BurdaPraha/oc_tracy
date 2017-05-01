@@ -27,3 +27,5 @@ For more information see official [Tracy repository](https://github.com/nette/tr
 It will move vqmod xml file to correct folder.
 
 4. add constant `define('DEV', true);` to your config.php, /admin/config.php
+5. optionally you can add row to your `.gitignore` file with path to tracy.xml (example: public/vqmod/xml/tracy.xml)
+6. celebrate!
