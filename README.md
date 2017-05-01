@@ -15,11 +15,11 @@ For more information see official [Tracy repository](https://github.com/nette/tr
 
 ```
     "scripts": {
-        "post-package-install": [
-            "php -r \"rename('vendor/burdapraha/oc_tracy/vqmod/xml/tracy.xml', 'public/vqmod/xml/tracy.xml');\""
+        "post-install-cmd": [
+            "php -r \"copy('vendor/burdapraha/oc_tracy/vqmod/xml/tracy.xml', 'public/vqmod/xml/tracy.xml');\""
         ],
-        "post-package-update": [
-            "php -r \"rename('vendor/burdapraha/oc_tracy/vqmod/xml/tracy.xml', 'public/vqmod/xml/tracy.xml');\""
+        "post-update-cmd": [
+            "php -r \"copy('vendor/burdapraha/oc_tracy/vqmod/xml/tracy.xml', 'public/vqmod/xml/tracy.xml');\""
         ]
     } 
 ```
