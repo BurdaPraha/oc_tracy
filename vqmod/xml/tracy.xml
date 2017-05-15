@@ -12,13 +12,17 @@
             </search>
             <add>
                 <![CDATA[
-                    if(defined('DEV')){
-                        if(DEV == true){
-                            Tracy\Debugger::enable(Tracy\Debugger::DEVELOPMENT); // todo: move mode to config
+                    if(defined('DEV') && true == DEV) {
 
-                            // register panels
+                            Tracy\Debugger::enable(Tracy\Debugger::DEVELOPMENT, DIR_LOGS);
+                            Tracy\Debugger::$strictMode = TRUE;
+
+                            if(defined('DEV_EMAIL')) {
+                                Tracy\Debugger::$email = DEV_EMAIL;
+                            }
+
+                            // register opencart panels
                             $panels = new TracyPanel\Plugin();
-                        }
                     }
                 ]]>
             </add>
