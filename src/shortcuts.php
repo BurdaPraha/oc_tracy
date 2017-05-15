@@ -1,5 +1,8 @@
 <?php
 
+use Tracy\Debugger;
+use Tracy\Dumper;
+
 if (!function_exists('__barDump')) {
     /**
      * @param $variable
