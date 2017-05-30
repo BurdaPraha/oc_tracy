@@ -14,15 +14,20 @@
                 <![CDATA[
                     if(defined('DEV') && true == DEV) {
 
-                            Tracy\Debugger::enable(Tracy\Debugger::DEVELOPMENT, DIR_LOGS);
-                            Tracy\Debugger::$strictMode = TRUE;
+                        Tracy\Debugger::enable(Tracy\Debugger::DEVELOPMENT, DIR_LOGS);
+                        Tracy\Debugger::$strictMode = TRUE;
 
-                            if(defined('DEV_EMAIL')) {
-                                Tracy\Debugger::$email = DEV_EMAIL;
-                            }
+                        if(defined('DEV_EMAIL')) {
+                            Tracy\Debugger::$email = DEV_EMAIL;
+                        }
 
-                            // register opencart panels
-                            $panels = new TracyPanel\Plugin();
+                        // register opencart panels
+                        $panels = new TracyPanel\Plugin();
+
+                    } else {
+
+                        Tracy\Debugger::enable(Tracy\Debugger::DETECT, DIR_LOGS);
+
                     }
                 ]]>
             </add>
