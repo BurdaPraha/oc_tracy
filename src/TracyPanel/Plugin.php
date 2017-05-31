@@ -14,6 +14,7 @@ class Plugin
         Debugger::getBar()
             ->addPanel(new \TracyPanel\SystemPanel())
             ->addPanel(new \TracyPanel\SqlPanel())
+            ->addPanel(new \TracyPanel\TemplatesPanel())
             ->addPanel(new \TracyPanel\VariablePanel())
         ;
     }
