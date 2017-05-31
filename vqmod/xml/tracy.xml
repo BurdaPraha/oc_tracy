@@ -39,7 +39,7 @@
                     if (!empty($_SESSION[$_COOKIE['default']]['user_id'])) {
 
                         $_SESSION['_tracy']['templates_log'][] = $route;
-                        $output = '<span data-type="suggestions" data-template="'.$route.'" >' . $output . '</span>';
+                        //$output = '<span data-type="suggestions" data-template="'.$route.'" >' . $output . '</span>';
 
 				    }
 				]]>
