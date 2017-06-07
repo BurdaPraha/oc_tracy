@@ -5,31 +5,17 @@
     <vqmver required="true">2.6.0</vqmver>
     <author>Michal Landsman</author>
 
-    <file path="system/startup.php">
-        <operation info="bring tracy">
-            <search position="before">
-                <![CDATA[function library($class) {]]>
+    <file path="system/engine/loader.php">
+        <operation info="log templates">
+            <search position="after">
+                <![CDATA[$output = $template->render($route . '.tpl');]]>
             </search>
             <add>
                 <![CDATA[
-                    if(defined('DEV') && true == DEV) {
-
-                        Tracy\Debugger::enable(Tracy\Debugger::DEVELOPMENT, DIR_LOGS);
-                        Tracy\Debugger::$strictMode = TRUE;
-
-                        if(defined('DEV_EMAIL')) {
-                            Tracy\Debugger::$email = DEV_EMAIL;
-                        }
-
-                        // register opencart panels
-                        $panels = new TracyPanel\Plugin();
-
-                    } else {
-
-                        Tracy\Debugger::enable(Tracy\Debugger::DETECT, DIR_LOGS);
-
-                    }
-                ]]>
+                    $_SESSION['_tracy']['templates_log'][] = $route;
+                    // todo: think about this for future - some javascript tooltips
+                    // $output = '<span data-type="suggestions" data-template="'.$route.'" >' . $output . '</span>';
+				]]>
             </add>
         </operation>
     </file>
@@ -61,7 +47,7 @@
         </operation>
         <operation info="switch database vs session order init">
             <search position="before">
-                <![CDATA[// Database]]>
+                <![CDATA[// Loader]]>
             </search>
             <add>
                 <![CDATA[
@@ -73,6 +59,32 @@
                     }
 
                     $registry->set('session', $session);
+
+                    // clear last session about Tracy
+                    if(isset($_SESSION['_tracy']['templates_log'])) {
+                        unset($_SESSION['_tracy']['templates_log']);
+                    }
+                ]]>
+            </add>
+        </operation>
+        <operation info="bring tracy">
+            <search position="after">
+                <![CDATA[$session = new Session();]]>
+            </search>
+            <add>
+                <![CDATA[
+                    if(defined('DEV') && true == DEV) {
+
+                        Tracy\Debugger::enable(Tracy\Debugger::DEVELOPMENT, DIR_LOGS);
+                        Tracy\Debugger::$strictMode = TRUE;
+
+                        if(defined('DEV_EMAIL')) {
+                            Tracy\Debugger::$email = DEV_EMAIL;
+                        }
+
+                        // register opencart panels
+                        $panels = new TracyPanel\Plugin();
+                    }
                 ]]>
             </add>
         </operation>
