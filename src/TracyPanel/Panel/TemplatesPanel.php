@@ -17,7 +17,7 @@ class TemplatesPanel implements IBarPanel
      */
     private function getLog()
     {
-        return $_SESSION['_tracy']['templates_log'];
+        return isset($_SESSION['_tracy']['templates_log']) ? $_SESSION['_tracy']['templates_log'] : array();
     }
 
     /**
