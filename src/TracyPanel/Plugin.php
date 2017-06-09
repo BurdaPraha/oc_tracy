@@ -4,6 +4,7 @@ namespace TracyPanel;
 
 use Tracy\Debugger;
 use Tracy\Dumper;
+use TracyPanel;
 
 class Plugin
 {
@@ -12,11 +13,10 @@ class Plugin
     public function __construct()
     {
         Debugger::getBar()
-            ->addPanel(new \TracyPanel\SystemPanel())
-            ->addPanel(new \TracyPanel\SqlPanel())
-            ->addPanel(new \TracyPanel\TemplatesPanel())
-            ->addPanel(new \TracyPanel\VariablePanel())
-        ;
+            ->addPanel(new SystemPanel())
+            ->addPanel(new SqlPanel())
+            ->addPanel(new TemplatesPanel())
+            ->addPanel(new VariablePanel());
     }
 
     /**

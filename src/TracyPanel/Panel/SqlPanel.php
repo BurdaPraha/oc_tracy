@@ -17,7 +17,7 @@ class SqlPanel implements IBarPanel
      */
     private function getLog()
     {
-        return $_SESSION['_tracy']['sql_log'];
+        return isset($_SESSION['_tracy']['sql_log']) ? $_SESSION['_tracy']['sql_log'] : array();
     }
 
     /**
