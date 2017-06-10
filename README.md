@@ -29,3 +29,9 @@ It will move vqmod xml file to correct folder.
 4. add constant `define('DEV', true);` to your config.php, /admin/config.php
 5. optionally you can add row to your `.gitignore` file with path to tracy.xml (example: upload/vqmod/xml/tracy.xml)
 6. celebrate!
+
+## Optional settings
+
+Constants to config.php, /admin/config.php:
+- [DEV_EMAIL](https://github.com/nette/tracy#production-mode-and-error-logging) for notification about bugs in production mode
+- [DEV_EDITOR](https://pla.nette.org/en/how-open-files-in-ide-from-debugger#toc-mac-os-x) for one-click open file, row with bug from "bluescreen"

@@ -82,6 +82,10 @@
                             Tracy\Debugger::$email = DEV_EMAIL;
                         }
 
+                        if(defined('DEV_EDITOR')) {
+                            Tracy\Debugger::$editor = DEV_EDITOR;
+                        }
+
                         // register opencart panels
                         $panels = new TracyPanel\Plugin();
                     }
