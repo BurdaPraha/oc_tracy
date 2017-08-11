@@ -134,11 +134,11 @@
                     $pureFile = str_replace($cmsPath, '', $filename);
 
 
-                    $query_time = (time() + microtime());
+                    $query_time = (time() + microtime(true));
 
                     $result = $this->adaptor->query($sql, $params);
 
-                    $exec_time = (time() + microtime());
+                    $exec_time = (time() + microtime(true));
                     $exec_time = round($exec_time - $query_time, 4);
 
                     if (!isset($this->log['query_total_time']))
