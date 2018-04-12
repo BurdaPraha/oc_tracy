@@ -73,7 +73,7 @@
             </search>
             <add>
                 <![CDATA[
-                    if(defined('DEV') && true == DEV) {
+                    if(defined('DEV') && true == DEV || defined('dev') && true == dev) {
 
                         Tracy\Debugger::enable(Tracy\Debugger::DEVELOPMENT, DIR_LOGS);
                         Tracy\Debugger::$strictMode = TRUE;
